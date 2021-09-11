@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Grid,
@@ -7,30 +7,33 @@ import {
   Statistic,
   Icon,
   Form,
-  Button
+  Button,
+  Checkbox
 } from "semantic-ui-react";
 
 import ButtonSaveCancel from "./ButtonSaveCancel";
+import EntryForm from "./EntryForm";
 
-const NewEntryForm = () => {
+const NewEntryForm = ({
+  addEntry,
+  value,
+  description,
+  isExpense,
+  setDescription,
+  setIsExpense,
+  setValue
+}) => {
   return (
     <Form unstackable>
-      <Form.Group>
-        <Form.Input
-          icon="tags"
-          width={12}
-          label="Description"
-          placeholder="new thing"
-        />
-        <Form.Input
-          width={4}
-          label="Value"
-          placeholder="100.00"
-          icon="dollar"
-          iconPosition="left"
-        />
-      </Form.Group>
-      <ButtonSaveCancel />
+      <EntryForm
+        value={value}
+        description={description}
+        isExpense={isExpense}
+        setDescription={setDescription}
+        setValue={setValue}
+        setIsExpense={setIsExpense}
+      />
+      <ButtonSaveCancel addEntry={addEntry} />
     </Form>
   );
 };
