@@ -64,6 +64,24 @@ export default function App() {
     setExpenseTotal(totalExpenses);
   }, [entries]);
 
+  // store.subscribe(() => {
+  //   console.log("store", store.getState());
+  // });
+
+  // const payload_add = {
+  //   id: 5,
+  //   description: "Hello from redux",
+  //   value: 100,
+  //   isExpense: false
+  // };
+
+  // const payload_remove = {
+  //   id: 1
+  // };
+
+  // store.dispatch(addEntryRedux(payload_add));
+  // store.dispatch(removeEntryRedux(1));
+
   const deletEntry = (id) => {
     const result = entries.filter((entry) => entry.id !== id);
     setEntries(result);
