@@ -11,15 +11,18 @@ import {
 } from "semantic-ui-react";
 import ModalEdlit from "./ModalEdit";
 
+import { useDispatch } from "react-redux";
+import { removeEntryRedux } from "../actions/entries.actions";
+
 const EntryLine = ({
   id,
   description,
   value,
   isExpense = false,
-  deletEntry,
   setIsOpen,
   edeitEntry
 }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <Segment color={isExpense ? "red" : "green"}>
@@ -33,7 +36,11 @@ const EntryLine = ({
             </Grid.Column>
             <Grid.Column widescreen={3}>
               <Icon name="edit" onClick={() => edeitEntry(id)} />
-              <Icon onClick={() => deletEntry(id)} name="trash" bordered />
+              <Icon
+                onClick={() => dispatch(removeEntryRedux(id))}
+                name="trash"
+                bordered
+              />
             </Grid.Column>
           </Grid.Row>
         </Grid>

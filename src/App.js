@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Container,
-  Grid,
-  Header,
-  Segment,
-  Statistic,
-  Icon,
-  Form,
-  Button
-} from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import "./styles.css";
 
 import MainHeader from "./components/MainHeader";
@@ -18,8 +9,10 @@ import DisplayBalances from "./components/DisplayBalances";
 import EntryLines from "./components/EntryLines";
 import ModalEdlit from "./components/ModalEdit";
 
+import { useSelector } from "react-redux";
+
 export default function App() {
-  const [entries, setEntries] = useState(initialEntries);
+  // const [entries, setEntries] = useState(initialEntries);
   const [description, setDescription] = useState("");
   const [value, setValue] = useState("");
   const [isExpense, setIsExpense] = useState(true);
@@ -28,6 +21,7 @@ export default function App() {
   const [incomeTotal, setIncomeTotal] = useState(0);
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const entries = useSelector((state) => state.entries);
 
   const resetEntry = () => {
     setDescription("");
@@ -43,7 +37,7 @@ export default function App() {
       newEntries[index].description = description;
       newEntries[index].value = value;
       newEntries[index].isExpense = isExpense;
-      setEntries(newEntries);
+      // setEntries(newEntries);
       resetEntry();
     }
     // eslint-disable-next-line react
@@ -84,7 +78,7 @@ export default function App() {
 
   const deletEntry = (id) => {
     const result = entries.filter((entry) => entry.id !== id);
-    setEntries(result);
+    // setEntries(result);
   };
 
   const edeitEntry = (id) => {
@@ -107,9 +101,10 @@ export default function App() {
       value,
       isExpense
     });
-    setEntries(result);
+    // setEntries(result);
     resetEntry();
   };
+
   return (
     <Container>
       <MainHeader title="Budget" tyle="h1" />
@@ -117,11 +112,7 @@ export default function App() {
       <DisplayBalances incomeTotal={incomeTotal} expenseTotal={expenseTotal} />
 
       <MainHeader title="History" tyle="h3" />
-      <EntryLines
-        entries={entries}
-        deletEntry={deletEntry}
-        edeitEntry={edeitEntry}
-      />
+      <EntryLines entries={entries} edeitEntry={edeitEntry} />
 
       <MainHeader title="Add new transaction" tyle="h3" />
 
@@ -149,23 +140,23 @@ export default function App() {
   );
 }
 
-var initialEntries = [
-  {
-    id: 1,
-    description: "Work Income",
-    value: 10000,
-    isExpense: false
-  },
-  {
-    id: 2,
-    description: "Work BIll",
-    value: 20,
-    isExpense: true
-  },
-  {
-    id: 3,
-    description: "Rent",
-    value: 2000,
-    isExpense: true
-  }
-];
+// var initialEntries = [
+//   {
+//     id: 1,
+//     description: "Work Income",
+//     value: 10000,
+//     isExpense: false
+//   },
+//   {
+//     id: 2,
+//     description: "Work BIll",
+//     value: 20,
+//     isExpense: true
+//   },
+//   {
+//     id: 3,
+//     description: "Rent",
+//     value: 2000,
+//     isExpense: true
+//   }
+// ];
