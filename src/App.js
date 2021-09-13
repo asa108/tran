@@ -76,11 +76,6 @@ export default function App() {
   // store.dispatch(addEntryRedux(payload_add));
   // store.dispatch(removeEntryRedux(1));
 
-  const deletEntry = (id) => {
-    const result = entries.filter((entry) => entry.id !== id);
-    // setEntries(result);
-  };
-
   const edeitEntry = (id) => {
     console.log(`edeit entry id with ${id}`);
     if (id) {
