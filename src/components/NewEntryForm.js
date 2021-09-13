@@ -15,6 +15,7 @@ import { addEntryRedux } from "../actions/entries.actions";
 
 import ButtonSaveCancel from "./ButtonSaveCancel";
 import EntryForm from "./EntryForm";
+import { v4 as uuidv4 } from "uuid";
 
 const NewEntryForm = () => {
   const [description, setDescription] = useState("");
@@ -25,7 +26,7 @@ const NewEntryForm = () => {
   const addEntry = () => {
     dispatch(
       addEntryRedux({
-        id: 5,
+        id: uuidv4(),
         description,
         value,
         isExpense
