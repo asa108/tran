@@ -14,7 +14,7 @@ import ModalEdlit from "./ModalEdit";
 import { useDispatch } from "react-redux";
 import { removeEntryRedux } from "../actions/entries.actions";
 
-import { openEditModal, closeEditModal } from "../actions/entries.modals";
+import { openEditModal, closeEditModal } from "../actions/modals.actions";
 
 const EntryLine = ({ id, description, value, isExpense = false }) => {
   const dispatch = useDispatch();
