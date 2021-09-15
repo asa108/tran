@@ -14,14 +14,9 @@ import ModalEdlit from "./ModalEdit";
 import { useDispatch } from "react-redux";
 import { removeEntryRedux } from "../actions/entries.actions";
 
-const EntryLine = ({
-  id,
-  description,
-  value,
-  isExpense = false,
-  setIsOpen,
-  edeitEntry
-}) => {
+import { openEditModal, closeEditModal } from "../actions/entries.modals";
+
+const EntryLine = ({ id, description, value, isExpense = false }) => {
   const dispatch = useDispatch();
   return (
     <>
@@ -35,7 +30,7 @@ const EntryLine = ({
               ${value}
             </Grid.Column>
             <Grid.Column widescreen={3}>
-              <Icon name="edit" onClick={() => edeitEntry(id)} />
+              <Icon name="edit" onClick={() => dispatch(openEditModal(id))} />
               <Icon
                 onClick={() => dispatch(removeEntryRedux(id))}
                 name="trash"

@@ -12,36 +12,18 @@ import ModalEdlit from "./components/ModalEdit";
 import { useSelector } from "react-redux";
 
 export default function App() {
-  // const [entries, setEntries] = useState(initialEntries);
-  const [description, setDescription] = useState("");
-  const [value, setValue] = useState("");
-  const [isExpense, setIsExpense] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-  const [entryId, setEntryId] = useState(false);
   const [incomeTotal, setIncomeTotal] = useState(0);
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const [entry, setEntry] = useState();
   const entries = useSelector((state) => state.entries);
-
-  const resetEntry = () => {
-    setDescription("");
-    setValue("");
-    setIsExpense(true);
-  };
+  const { isOpen, id } = useSelector((state) => state.modals);
 
   useEffect(() => {
-    if (!isOpen && entryId) {
-      const index = entries.findIndex((entry) => entry.id === entryId);
-      console.log("index", index);
-      const newEntries = [...entries];
-      newEntries[index].description = description;
-      newEntries[index].value = value;
-      newEntries[index].isExpense = isExpense;
-      // setEntries(newEntries);
-      resetEntry();
-    }
+    const index = entries.findIndex((entry) => entry.id === id);
+    setEntry(entries[index]);
     // eslint-disable-next-line react
-  }, [isOpen]);
+  }, [isOpen, id]);
 
   useEffect(() => {
     let totalIncom = 0;
@@ -76,30 +58,35 @@ export default function App() {
   // store.dispatch(addEntryRedux(payload_add));
   // store.dispatch(removeEntryRedux(1));
 
-  const edeitEntry = (id) => {
-    console.log(`edeit entry id with ${id}`);
-    if (id) {
-      const index = entries.findIndex((entry) => entry.id === id);
-      const entry = entries[index];
-      setEntryId(id);
-      setDescription(entry.description);
-      setValue(entry.value);
-      setIsExpense(entry.isExpense);
-      setIsOpen(true);
-    }
-  };
+  // const edeitEntry = (id) => {
+  //   console.log(`edeit entry id with ${id}`);
+  //   if (id) {
+  //     const index = entries.findIndex((entry) => entry.id === id);
+  //     const entry = entries[index];
+  //     setEntryId(id);
+  //     setDescription(entry.description);
+  //     setValue(entry.value);
+  //     setIsExpense(entry.isExpense);
+  //     setIsOpen(true);
+  //   }
+  // };
 
-  const addEntry = () => {
-    const result = entries.concat({
-      id: entries.length + 1,
-      description,
-      value,
-      isExpense
-    });
-    // setEntries(result);
-    resetEntry();
-  };
+  // const addEntry = () => {
+  //   const result = entries.concat({
+  //     id: entries.length + 1,
+  //     description,
+  //     value,
+  //     isExpense
+  //   });
+  //   // setEntries(result);
+  //   resetEntry();
+  // };
 
+  // const resetEntry = () => {
+  //   setDescription("");
+  //   setValue("");
+  //   setIsExpense(true);
+  // };
   return (
     <Container>
       <MainHeader title="Budget" tyle="h1" />
@@ -107,30 +94,12 @@ export default function App() {
       <DisplayBalances incomeTotal={incomeTotal} expenseTotal={expenseTotal} />
 
       <MainHeader title="History" tyle="h3" />
-      <EntryLines entries={entries} edeitEntry={edeitEntry} />
+      <EntryLines entries={entries} />
 
       <MainHeader title="Add new transaction" tyle="h3" />
 
-      <NewEntryForm
-        addEntry={addEntry}
-        value={value}
-        description={description}
-        isExpense={isExpense}
-        setDescription={setDescription}
-        setValue={setValue}
-        setIsExpense={setIsExpense}
-      />
-      <ModalEdlit
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        addEntry={addEntry}
-        value={value}
-        description={description}
-        isExpense={isExpense}
-        setDescription={setDescription}
-        setValue={setValue}
-        setIsExpense={setIsExpense}
-      />
+      <NewEntryForm />
+      <ModalEdlit isOpen={isOpen} {...entry} />
     </Container>
   );
 }

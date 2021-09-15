@@ -1,14 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addEntryRedux } from "../actions/entries.actions";
+import { addEntryRedux, updateEntryRedux } from "../actions/entries.actions";
 
 import { v4 as uuidv4 } from "uuid";
+import { closeEditModal } from "../actions/modals.actions";
 
-const useEntryDetails = () => {
-  const [description, setDescription] = useState("");
-  const [value, setValue] = useState("");
-  const [isExpense, setIsExpense] = useState(true);
+const useEntryDetails = (desc = "", val = "", isExp = true) => {
+  const [description, setDescription] = useState(desc);
+  const [value, setValue] = useState(val);
+  const [isExpense, setIsExpense] = useState(isExp);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setDescription(desc);
+    setValue(val);
+    setIsExpense(isExp);
+  }, [desc, val, isExp]);
+
+  const resetValues = () => {
+    setDescription("");
+    setValue("");
+    setIsExpense(true);
+  };
+
+  const updateEntry = (id) => {
+    dispatch(
+      updateEntryRedux(id, {
+        id,
+        description,
+        value,
+        isExpense
+      })
+    );
+    dispatch(closeEditModal());
+    resetValues();
+  };
 
   const addEntry = () => {
     dispatch(
@@ -19,10 +45,9 @@ const useEntryDetails = () => {
         isExpense
       })
     );
-    setDescription("");
-    setValue("");
-    setIsExpense(true);
+    resetValues();
   };
+
   return {
     description,
     setDescription,
@@ -30,7 +55,8 @@ const useEntryDetails = () => {
     setValue,
     isExpense,
     setIsExpense,
-    addEntry
+    addEntry,
+    updateEntry
   };
 };
 
