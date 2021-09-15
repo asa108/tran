@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "semantic-ui-react";
 import "./styles.css";
 
@@ -22,8 +22,7 @@ export default function App() {
   useEffect(() => {
     const index = entries.findIndex((entry) => entry.id === id);
     setEntry(entries[index]);
-    // eslint-disable-next-line react
-  }, [isOpen, id]);
+  }, [isOpen, id, entries]);
 
   useEffect(() => {
     let totalIncom = 0;
@@ -33,7 +32,6 @@ export default function App() {
         return (totalExpenses += Number(entry.value));
       }
       return (totalIncom += Number(entry.value));
-      // eslint-disable-next-line react-hook-/exhaustive-deps
     });
     setTotal(totalIncom - totalExpenses);
     setIncomeTotal(totalIncom);
